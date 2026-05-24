@@ -3,8 +3,6 @@
 <head>
   <title>Joel's Movie Slot Machine</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
   <style>
     body {
       font-family: "Comic Sans MS", Arial, sans-serif;
@@ -70,14 +68,27 @@
       top: 0;
       left: 0;
       will-change: transform;
+      z-index: 1;
     }
 
+    /* ✅ FIXED ITEM STYLE (THIS WAS THE BUG) */
     .item {
       height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+
+      font-size: 18px;
+      font-family: monospace;
+
+      padding: 12px;
+      box-sizing: border-box;
+
+      text-align: center;
+
+      white-space: normal;      /* allows wrapping */
+      word-break: break-word;   /* prevents overflow */
+      line-height: 1.2;
     }
 
     #year .item { background: #ffdddd; }
@@ -92,6 +103,29 @@
       border: 4px outset white;
       cursor: pointer;
     }
+
+    button:active {
+      border: 4px inset white;
+    }
+
+    /* PLACEHOLDERS */
+    .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      font-size: 20px;
+      background: white;
+      z-index: 2;
+      white-space: pre;
+    }
+
+    #year-placeholder { background: #ffdddd; }
+    #genre-placeholder { background: #ddeeff; }
+    #wild-placeholder { background: #fff4aa; }
+
   </style>
 </head>
 
@@ -105,37 +139,45 @@
 
   <div class="column">
     <div class="label">YEAR</div>
-    <div class="reel-window"><div class="reel-strip" id="year"></div></div>
+    <div class="reel-window">
+      <div class="placeholder" id="year-placeholder">━━━►━━━►━━━</div>
+      <div class="reel-strip" id="year"></div>
+    </div>
   </div>
 
   <div class="column">
     <div class="label">GENRE</div>
-    <div class="reel-window"><div class="reel-strip" id="genre"></div></div>
+    <div class="reel-window">
+      <div class="placeholder" id="genre-placeholder">▭▭▭▭▭</div>
+      <div class="reel-strip" id="genre"></div>
+    </div>
   </div>
 
   <div class="column">
     <div class="label">WILDCARD</div>
-    <div class="reel-window"><div class="reel-strip" id="wild"></div></div>
+    <div class="reel-window">
+      <div class="placeholder" id="wild-placeholder">━━✕━━✕━━</div>
+      <div class="reel-strip" id="wild"></div>
+    </div>
   </div>
 
 </div>
 
-<button onclick="spin()">SPIN!!!</button>
+<button onclick="spin()">SPIN</button>
 
 <script>
+
 const ITEM_HEIGHT = 220;
 
-/* YEAR */
+/* DATA */
 const years = [];
 for (let i = 1960; i <= 2026; i++) years.push(i.toString());
 
-/* GENRE (UNCHANGED BUT FULL RANGE) */
 const genres = [
   "Comedy","Horror","Drama","Action","Mystery",
   "Romance","Sci-Fi","Crime","Thriller","Fantasy"
 ];
 
-/* WILDCARDS — EXACTLY AS PROVIDED */
 const wildcards = [
 "I’ve never seen",
 "I’ve seen it but not in the last like ten years",
@@ -170,7 +212,6 @@ const wildcards = [
 "Main Actor is born somewhere other than America"
 ];
 
-/* RANDOM (TRUE UNIFORM DISTRIBUTION) */
 function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -201,8 +242,17 @@ function snap(el, target) {
   el.style.transform = `translateY(${-target * ITEM_HEIGHT}px)`;
 }
 
-/* SLOT ENGINE */
+/* SPIN */
+let placeholdersHidden = false;
+
 function spin() {
+
+  if (!placeholdersHidden) {
+    document.querySelectorAll(".placeholder").forEach(p => {
+      p.style.display = "none";
+    });
+    placeholdersHidden = true;
+  }
 
   const face = document.getElementById("face");
   face.classList.add("spinning");
@@ -226,7 +276,6 @@ function spin() {
 
   function animate() {
     const now = performance.now();
-
     let allDone = true;
 
     reels.forEach(r => {
@@ -237,6 +286,7 @@ function spin() {
       const e = ease(t);
 
       const pos = e * (r.target * ITEM_HEIGHT);
+
       r.el.style.transform = `translateY(${-pos}px)`;
 
       if (t >= 1) {
@@ -245,6 +295,7 @@ function spin() {
       } else {
         allDone = false;
       }
+
     });
 
     if (!allDone) {
@@ -257,6 +308,7 @@ function spin() {
 
   requestAnimationFrame(animate);
 }
+
 </script>
 
 </body>
