@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Joel's Movie Slot Machine</title>
+
   <style>
     body {
       font-family: "Comic Sans MS", Arial, sans-serif;
@@ -9,24 +10,29 @@
       background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
       overflow: hidden;
     }
+
     h1 {
       font-size: 58px;
       margin-top: 20px;
       color: blue;
       text-shadow: 2px 2px white, 4px 4px black;
     }
+
     #face {
       width: 140px;
       border: 5px outset gold;
       box-shadow: 0 0 0 3px black;
     }
+
     .spinning {
       animation: spinny 0.8s linear infinite;
     }
+
     @keyframes spinny {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
+
     .machine {
       display: flex;
       justify-content: center;
@@ -34,18 +40,21 @@
       margin-top: 40px;
       gap: 10px;
     }
+
     .column {
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
     }
+
     .label {
       font-size: 22px;
       background: yellow;
       border: 3px solid black;
       padding: 4px 10px;
     }
+
     .year-range {
       width: 180px;
       margin-top: 10px;
@@ -55,16 +64,19 @@
       box-sizing: border-box;
       font-family: monospace;
     }
+
     .year-range-title {
       font-size: 16px;
       font-weight: bold;
       margin-bottom: 6px;
     }
+
     .year-range-menus {
       display: flex;
       gap: 6px;
       justify-content: center;
     }
+
     .year-range select {
       width: 72px;
       font-family: monospace;
@@ -72,6 +84,7 @@
       background: white;
       border: 2px inset gray;
     }
+
     .reel-window {
       width: 180px;
       height: 220px;
@@ -81,6 +94,601 @@
       position: relative;
       z-index: 5;
     }
+
     .reel-strip {
       position: absolute;
       width: 100%;
+      top: 0;
+      left: 0;
+      will-change: transform;
+      z-index: 1;
+    }
+
+    .item {
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-family: monospace;
+      padding: 12px;
+      box-sizing: border-box;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.2;
+    }
+
+    #year .item { background: #ffdddd; }
+    #genre .item { background: #ddeeff; }
+    #wild .item { background: #fff4aa; }
+
+    button {
+      margin-top: 30px;
+      padding: 14px 40px;
+      font-size: 22px;
+      background: #c0c0c0;
+      border: 4px outset white;
+      cursor: pointer;
+    }
+
+    button:active {
+      border: 4px inset white;
+    }
+
+    .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      font-size: 20px;
+      background: white;
+      z-index: 2;
+      white-space: pre;
+    }
+
+    #year-placeholder { background: #ffdddd; }
+    #genre-placeholder { background: #ddeeff; }
+    #wild-placeholder { background: #fff4aa; }
+
+    #cameo-back-layer,
+    #cameo-front-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    #cameo-back-layer {
+      z-index: 4;
+    }
+
+    #cameo-front-layer {
+      z-index: 50;
+    }
+
+    .cameo {
+      position: fixed;
+      max-width: 390px;
+      max-height: 310px;
+      object-fit: contain;
+      pointer-events: none;
+      filter: drop-shadow(6px 8px 2px rgba(0, 0, 0, 0.45));
+    }
+
+    .drive-cameo {
+      left: -430px;
+      bottom: 8vh;
+      width: 400px;
+      z-index: 20;
+      animation: driveAcross 2.65s linear forwards;
+    }
+
+    .delorean-cameo {
+      z-index: 20;
+    }
+
+    .fly-cameo {
+      left: -430px;
+      top: 18vh;
+      width: 390px;
+      animation: flyAcross 2.45s ease-in-out forwards;
+    }
+
+    .tie-cameo {
+      left: -360px;
+      bottom: -210px;
+      width: 380px;
+      z-index: 20;
+      animation: tieFlyAway 2.8s ease-out forwards;
+    }
+
+    .peek-window {
+      position: fixed;
+      height: 260px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .peek-cameo {
+      position: absolute;
+      bottom: -260px;
+      width: 240px;
+      max-width: none;
+      max-height: none;
+      opacity: 0;
+      transform: translateY(40px) scale(0.85);
+      transform-origin: bottom center;
+      animation: peekOut 2.65s ease-in-out forwards;
+      z-index: 4;
+    }
+
+    .jason-cameo {
+      width: 360px;
+      clip-path: inset(0 0 18% 0);
+      animation-name: jasonPeekOut;
+    }
+
+    .kermit-cameo {
+      animation-name: kermitPeekOut;
+    }
+
+    @keyframes driveAcross {
+      0% { transform: translateX(0) rotate(-2deg); }
+      50% { transform: translateX(calc(50vw + 215px)) rotate(1deg); }
+      100% { transform: translateX(calc(100vw + 860px)) rotate(-1deg); }
+    }
+
+    @keyframes flyAcross {
+      0% { transform: translateX(0) translateY(20px) rotate(-7deg); }
+      45% { transform: translateX(calc(50vw + 215px)) translateY(-26px) rotate(4deg); }
+      100% { transform: translateX(calc(100vw + 860px)) translateY(10px) rotate(9deg); }
+    }
+
+    @keyframes tieFlyAway {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1.2) rotate(-14deg);
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+        transform: translate(calc(100vw + 420px), calc(-100vh - 220px)) scale(0.08) rotate(24deg);
+      }
+    }
+
+    @keyframes peekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.85);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(40px) scale(0.85);
+      }
+      18%, 76% {
+        opacity: 1;
+        transform: translateY(-120px) scale(1);
+      }
+      92% {
+        opacity: 1;
+        transform: translateY(40px) scale(0.85);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.85);
+      }
+    }
+
+    @keyframes jasonPeekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.85);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(40px) scale(0.85);
+      }
+      18%, 76% {
+        opacity: 1;
+        transform: translateY(-170px) scale(1);
+      }
+      92% {
+        opacity: 1;
+        transform: translateY(40px) scale(0.85);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.85);
+      }
+    }
+
+    @keyframes kermitPeekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.85);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(40px) scale(0.85);
+      }
+      18%, 76% {
+        opacity: 1;
+        transform: translateY(-220px) scale(1);
+      }
+      92% {
+        opacity: 1;
+        transform: translateY(40px) scale(0.85);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.85);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🎬 JOEL'S MOVIE SLOT MACHINE 🎰</h1>
+
+<img src="face.png" id="face">
+
+<div id="cameo-back-layer"></div>
+<div id="cameo-front-layer"></div>
+
+<div class="machine">
+
+  <div class="column" id="year-column">
+    <div class="label">YEAR</div>
+    <div class="reel-window">
+      <div class="placeholder" id="year-placeholder">━━━►━━━►━━━</div>
+      <div class="reel-strip" id="year"></div>
+    </div>
+    <div class="year-range">
+      <div class="year-range-title">Year Range</div>
+      <div class="year-range-menus">
+        <select id="year-start" aria-label="Start year"></select>
+        <select id="year-end" aria-label="End year"></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="label">GENRE</div>
+    <div class="reel-window">
+      <div class="placeholder" id="genre-placeholder">▭▭▭▭▭</div>
+      <div class="reel-strip" id="genre"></div>
+    </div>
+  </div>
+
+  <div class="column" id="wild-column">
+    <div class="label">WILDCARD</div>
+    <div class="reel-window">
+      <div class="placeholder" id="wild-placeholder">━━✕━━✕━━</div>
+      <div class="reel-strip" id="wild"></div>
+    </div>
+  </div>
+
+</div>
+
+<button onclick="spin()">SPIN</button>
+
+<script>
+
+const ITEM_HEIGHT = 220;
+
+const MIN_YEAR = 1940;
+const MAX_YEAR = 2026;
+const DEFAULT_START_YEAR = 1960;
+const DEFAULT_END_YEAR = 2026;
+
+let years = [];
+let cameoTimer = null;
+let cameoBag = [];
+
+const genres = [
+  "Comedy","Horror","Drama","Action","Mystery",
+  "Romance","Sci-Fi","Crime","Thriller","Fantasy"
+];
+
+const wildcards = [
+"I’ve never seen",
+"I’ve seen it but not in the last like ten years",
+"I’ve seen it in a theatre.",
+"Directed by someone I’ve never heard of",
+"Made by a non-American",
+"Based on a book",
+"Sequel",
+"Has been remade or is a remake",
+"Starring an actor known better for a TV show",
+"Starring an actor who has been in Star Wars or Marvel",
+"Starring an Oscar winner",
+"Directorial Debut",
+"In the top 20 box office of the year",
+"Someone gets murdered in it",
+"Is mentioned by a fuckin celebrity in one of those fuckin Letterboxd top 4 vids",
+"Has the word “The” in the title",
+"On Tubi",
+"On Prime",
+"On Netflix",
+"I own on DVD, VHS or Bluray",
+"Starts with S (not including the, a or an)",
+"Has the letter w somewhere in the title",
+"Lead character is a woman",
+"Starring someone who was in one of the last five movies I’ve watched",
+"Starts with T (not including the, a or an)",
+"Starts with R (not including the, a or an)",
+"First billed star starts with a J",
+"Director’s name has a P, Q or R somewhere in first or last",
+"Director is British",
+"Main Actor is British",
+"Main Actor is born somewhere other than America"
+];
+
+const cameos = [
+  { file: "batmobile.png", type: "drive" },
+  { file: "delorean.png", type: "drive" },
+  { file: "xwing.png", type: "fly" },
+  { file: "tiefighter.png", type: "tie" },
+  { file: "misspiggy.png", type: "peek" },
+  { file: "jason.png", type: "peek" },
+  { file: "kermit.png", type: "peek" },
+  { file: "chucky.png", type: "peek" }
+];
+
+function random(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function shuffled(arr) {
+  const copy = arr.slice();
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = temp;
+  }
+  return copy;
+}
+
+function makeYearList(start, end) {
+  const list = [];
+  for (let i = start; i <= end; i++) list.push(i.toString());
+  return list;
+}
+
+function fillYearMenu(select, defaultYear) {
+  for (let i = MIN_YEAR; i <= MAX_YEAR; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+    if (i === defaultYear) option.selected = true;
+    select.appendChild(option);
+  }
+}
+
+function buildReel(el, data) {
+  el.innerHTML = "";
+  const loop = data.concat(data).concat(data);
+
+  loop.forEach(text => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.textContent = text;
+    el.appendChild(div);
+  });
+}
+
+const yearEl = document.getElementById("year");
+const genreEl = document.getElementById("genre");
+const wildEl = document.getElementById("wild");
+const yearStartEl = document.getElementById("year-start");
+const yearEndEl = document.getElementById("year-end");
+const cameoBackLayer = document.getElementById("cameo-back-layer");
+const cameoFrontLayer = document.getElementById("cameo-front-layer");
+
+fillYearMenu(yearStartEl, DEFAULT_START_YEAR);
+fillYearMenu(yearEndEl, DEFAULT_END_YEAR);
+
+function updateYearsFromMenus() {
+  let start = Number(yearStartEl.value);
+  let end = Number(yearEndEl.value);
+
+  if (start > end) {
+    const temp = start;
+    start = end;
+    end = temp;
+  }
+
+  years = makeYearList(start, end);
+  buildReel(yearEl, years);
+  snap(yearEl, 0);
+}
+
+yearStartEl.addEventListener("change", updateYearsFromMenus);
+yearEndEl.addEventListener("change", updateYearsFromMenus);
+
+updateYearsFromMenus();
+buildReel(genreEl, genres);
+buildReel(wildEl, wildcards);
+
+function snap(el, target) {
+  el.style.transform = `translateY(${-target * ITEM_HEIGHT}px)`;
+}
+
+function clearCameo() {
+  clearTimeout(cameoTimer);
+  cameoBackLayer.innerHTML = "";
+  cameoFrontLayer.innerHTML = "";
+}
+
+function tryPlayRandomCameo(choices) {
+  if (choices.length === 0) {
+    cameoBag = [];
+    return;
+  }
+
+  const availableChoices = choices.slice();
+  const cameo = availableChoices.shift();
+  cameoBag = availableChoices.slice();
+  const img = document.createElement("img");
+
+  img.src = cameo.file;
+  img.alt = "";
+  img.className = "cameo";
+
+  img.addEventListener("load", () => {
+    playCameoImage(img, cameo);
+  }, { once: true });
+
+  img.addEventListener("error", () => {
+    tryPlayRandomCameo(availableChoices);
+  }, { once: true });
+}
+
+function playCameoImage(img, cameo) {
+  clearCameo();
+
+  if (cameo.type === "drive") {
+    img.classList.add("drive-cameo");
+  }
+
+  if (cameo.file === "delorean.png") {
+    img.classList.add("delorean-cameo");
+  }
+
+  if (cameo.type === "fly") {
+    img.classList.add("fly-cameo");
+  }
+
+  if (cameo.type === "tie") {
+    img.classList.add("tie-cameo");
+  }
+
+  if (cameo.type === "peek") {
+    const hidingSpots = [
+      document.querySelector("#year-column .reel-window"),
+      document.querySelector("#wild-column .reel-window")
+    ];
+    const hidingSpot = (cameo.file === "jason.png"
+      ? document.querySelector("#wild-column .reel-window")
+      : random(hidingSpots)
+    ).getBoundingClientRect();
+    const peekWindow = document.createElement("div");
+    const windowWidth = cameo.file === "jason.png" ? 430 : 230;
+
+    img.classList.add("peek-cameo");
+    if (cameo.file === "jason.png") {
+      img.classList.add("jason-cameo");
+    }
+    if (cameo.file === "kermit.png") {
+      img.classList.add("kermit-cameo");
+    }
+    const peekWidth = cameo.file === "jason.png" ? 360 : 240;
+    peekWindow.className = "peek-window";
+    peekWindow.style.width = `${windowWidth}px`;
+    peekWindow.style.left = `${hidingSpot.left + hidingSpot.width / 2 - windowWidth / 2}px`;
+    peekWindow.style.top = `${hidingSpot.top - 260}px`;
+    img.style.left = `${windowWidth / 2 - peekWidth / 2}px`;
+    peekWindow.appendChild(img);
+  }
+
+  if (cameo.type === "peek") {
+    cameoBackLayer.appendChild(img.parentElement);
+  } else {
+    cameoFrontLayer.appendChild(img);
+  }
+
+  img.addEventListener("animationend", clearCameo, { once: true });
+}
+
+function playSpinCameo() {
+  clearCameo();
+  cameoTimer = setTimeout(() => {
+    if (cameoBag.length === 0) {
+      cameoBag = shuffled(cameos);
+    }
+    tryPlayRandomCameo(cameoBag);
+  }, 250);
+}
+
+let placeholdersHidden = false;
+let isSpinning = false;
+
+function spin() {
+  if (isSpinning) return;
+  isSpinning = true;
+
+  updateYearsFromMenus();
+  playSpinCameo();
+
+  if (!placeholdersHidden) {
+    document.querySelectorAll(".placeholder").forEach(p => {
+      p.style.display = "none";
+    });
+    placeholdersHidden = true;
+  }
+
+  const face = document.getElementById("face");
+  face.classList.add("spinning");
+
+  const startTime = performance.now();
+
+  const reels = [
+    { el: yearEl, list: years, duration: 2600 },
+    { el: genreEl, list: genres, duration: 3100 },
+    { el: wildEl, list: wildcards, duration: 3700 }
+  ].map(r => ({
+    el: r.el,
+    target: r.list.length * 2 + Math.floor(Math.random() * r.list.length),
+    duration: r.duration,
+    done: false
+  }));
+
+  function ease(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate() {
+    const now = performance.now();
+    let allDone = true;
+
+    reels.forEach(r => {
+      if (r.done) return;
+
+      const t = Math.min((now - startTime) / r.duration, 1);
+      const e = ease(t);
+      const pos = e * (r.target * ITEM_HEIGHT);
+
+      r.el.style.transform = `translateY(${-pos}px)`;
+
+      if (t >= 1) {
+        r.done = true;
+        snap(r.el, r.target);
+      } else {
+        allDone = false;
+      }
+    });
+
+    if (!allDone) {
+      requestAnimationFrame(animate);
+    } else {
+      reels.forEach(r => snap(r.el, r.target));
+      face.classList.remove("spinning");
+      isSpinning = false;
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+</script>
+
+</body>
+</html>
