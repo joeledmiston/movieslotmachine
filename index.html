@@ -18,6 +18,52 @@
       text-shadow: 2px 2px white, 4px 4px black;
     }
 
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tab-button {
+      margin-top: 0;
+      padding: 10px 18px;
+      font-size: 18px;
+    }
+
+    .tab-button.active {
+      background: yellow;
+      border-color: black;
+    }
+
+    .game-panel {
+      display: none;
+    }
+
+    .game-panel.active {
+      display: block;
+    }
+
+    #open-game {
+      position: relative;
+      min-height: 680px;
+      padding-top: 26px;
+      box-sizing: border-box;
+    }
+
+    #open-game h1 {
+      margin: 24px auto 10px;
+      font-size: 56px;
+    }
+
+    .open-layout {
+      position: relative;
+      width: 820px;
+      max-width: 94vw;
+      min-height: 360px;
+      margin: 0 auto;
+    }
+
     #face {
       width: 140px;
       border: 5px outset gold;
@@ -122,6 +168,222 @@
     #year .item { background: #ffdddd; }
     #genre .item { background: #ddeeff; }
     #wild .item { background: #fff4aa; }
+    #actor-one .item { background: #ddffdd; }
+    #actor-two .item { background: #ffe1f3; }
+    #open-wheel .item { background: #eeeeff; }
+
+    .actor-window {
+      width: 260px;
+    }
+
+    .actor-window .item {
+      font-size: 17px;
+    }
+
+    .open-wheel-input {
+      display: block;
+      width: min(620px, 90vw);
+      height: 170px;
+      margin: 24px auto 0;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 16px;
+      border: 6px ridge gray;
+      box-sizing: border-box;
+      resize: vertical;
+      background: white;
+    }
+
+    .open-note {
+      margin-top: 8px;
+      font-family: monospace;
+      font-size: 15px;
+      background: yellow;
+      display: inline-block;
+      padding: 4px 10px;
+      border: 3px solid black;
+    }
+
+    .open-wheel-stage {
+      width: 620px;
+      height: 330px;
+      position: relative;
+      overflow: visible;
+      background: transparent;
+      border: 0;
+      box-sizing: border-box;
+      perspective: 600px;
+    }
+
+    .open-machine {
+      margin-top: 0;
+      min-height: 350px;
+    }
+
+    .open-card {
+      position: absolute;
+      width: 280px;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      box-sizing: border-box;
+      background: #ff9f1c;
+      border: 6px ridge gray;
+      font-family: monospace;
+      font-size: 18px;
+      line-height: 1.15;
+      text-align: center;
+      word-break: break-word;
+      box-shadow: 7px 7px 0 black;
+      overflow: hidden;
+      contain: paint;
+      backface-visibility: hidden;
+      transform-origin: center center;
+      will-change: left, top, transform, opacity;
+    }
+
+    .open-card-text {
+      width: 100%;
+      max-height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      pointer-events: none;
+      transform: translateZ(0);
+    }
+
+    .open-wheel-stage.finished .open-card.top,
+    .open-wheel-stage.finished .open-card.bottom {
+      display: none;
+    }
+
+    .open-wheel-stage.finished .open-card.middle {
+      display: flex;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(0deg) scale(1.08);
+      background: #ff9f1c;
+      border-color: black;
+    }
+
+    .open-card.winner-pop {
+      animation: winnerPop 0.3s ease-out forwards;
+    }
+
+    .open-card.toss-left {
+      animation: tossLeft 0.28s cubic-bezier(.7, -.35, 1, .65) forwards;
+    }
+
+    .open-card.toss-right {
+      animation: tossRight 0.28s cubic-bezier(.7, -.35, 1, .65) forwards;
+    }
+
+    .owen-cameo {
+      position: absolute;
+      right: 18px;
+      top: 104px;
+      width: 235px;
+      pointer-events: none;
+      opacity: 1;
+      z-index: 70;
+      filter: drop-shadow(6px 6px 0 black);
+    }
+
+    .owen-cameo.active {
+      animation: owenWheelson 3.8s ease-in-out forwards;
+    }
+
+    .owen-speech {
+      position: absolute;
+      right: 120px;
+      top: 42px;
+      max-width: 210px;
+      background: white;
+      border: 4px solid black;
+      border-radius: 22px;
+      padding: 12px 14px;
+      font-family: "Comic Sans MS", Arial, sans-serif;
+      font-size: 18px;
+      line-height: 1.1;
+      z-index: 71;
+      box-shadow: 5px 5px 0 black;
+    }
+
+    .owen-speech::after {
+      content: "";
+      position: absolute;
+      right: 12px;
+      bottom: -17px;
+      width: 28px;
+      height: 20px;
+      background: white;
+      border-right: 4px solid black;
+      border-bottom: 4px solid black;
+      transform: rotate(34deg);
+    }
+
+    .owen-speech.hidden {
+      display: none;
+    }
+
+    @keyframes winnerPop {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.98);
+      }
+      55% {
+        transform: translate(-50%, -50%) rotate(-5deg) scale(1.24);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.08);
+      }
+    }
+
+    @keyframes tossLeft {
+      to {
+        opacity: 0;
+        translate: -720px -270px;
+        rotate: -80deg;
+        scale: 0.42;
+      }
+    }
+
+    @keyframes tossRight {
+      to {
+        opacity: 0;
+        translate: 720px -270px;
+        rotate: 80deg;
+        scale: 0.42;
+      }
+    }
+
+    @keyframes owenWheelson {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+      14% {
+        transform: translate(-10px, -12px) rotate(-10deg) scale(1.08);
+      }
+      28% {
+        transform: translate(12px, 8px) rotate(9deg) scale(0.98);
+      }
+      44% {
+        transform: translate(-16px, 4px) rotate(-12deg) scale(1.16);
+      }
+      62% {
+        transform: translate(10px, -10px) rotate(10deg) scale(1.34);
+      }
+      80% {
+        transform: translate(-8px, 8px) rotate(-7deg) scale(1.12);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+      }
+    }
 
     button {
       margin-top: 30px;
@@ -167,6 +429,14 @@
 
     #cameo-front-layer {
       z-index: 50;
+    }
+
+    #mole-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 60;
     }
 
     .cameo {
@@ -234,6 +504,36 @@
 
     .kermit-cameo {
       animation-name: kermitPeekOut;
+    }
+
+    .mole-window {
+      position: fixed;
+      width: 175px;
+      height: 175px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 6;
+    }
+
+    .mole-face {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      width: 140px;
+      border-radius: 50%;
+      clip-path: circle(47% at 50% 50%);
+    }
+
+    .mole-left .mole-face {
+      animation: faceMoleLeft 0.95s ease-in-out forwards;
+    }
+
+    .mole-right .mole-face {
+      animation: faceMoleRight 0.95s ease-in-out forwards;
+    }
+
+    .mole-bottom .mole-face {
+      animation: faceMoleBottom 0.95s ease-in-out forwards;
     }
 
     @keyframes driveAcross {
@@ -330,10 +630,54 @@
         transform: translateY(40px) scale(0.85);
       }
     }
+
+    @keyframes faceMoleLeft {
+      0% {
+        transform: translateX(175px) rotate(-90deg) scale(0.85);
+      }
+      18%, 78% {
+        transform: translateX(58px) rotate(-90deg) scale(1);
+      }
+      100% {
+        transform: translateX(175px) rotate(-90deg) scale(0.85);
+      }
+    }
+
+    @keyframes faceMoleRight {
+      0% {
+        transform: translateX(-175px) rotate(90deg) scale(0.85);
+      }
+      18%, 78% {
+        transform: translateX(-58px) rotate(90deg) scale(1);
+      }
+      100% {
+        transform: translateX(-175px) rotate(90deg) scale(0.85);
+      }
+    }
+
+    @keyframes faceMoleBottom {
+      0% {
+        transform: translateY(-175px) rotate(180deg) scale(0.85);
+      }
+      18%, 78% {
+        transform: translateY(-58px) rotate(180deg) scale(1);
+      }
+      100% {
+        transform: translateY(-175px) rotate(180deg) scale(0.85);
+      }
+    }
   </style>
 </head>
 
 <body>
+
+<div class="tabs">
+  <button class="tab-button active" id="movie-tab" onclick="showGame('movie')">Movie Slot</button>
+  <button class="tab-button" id="six-tab" onclick="showGame('six')">Six Degrees</button>
+  <button class="tab-button" id="open-tab" onclick="showGame('open')">Open Wheelson</button>
+</div>
+
+<section class="game-panel active" id="movie-game">
 
 <h1>🎬 JOEL'S MOVIE SLOT MACHINE 🎰</h1>
 
@@ -379,11 +723,79 @@
 
 <button onclick="spin()">SPIN</button>
 
+</section>
+
+<section class="game-panel" id="six-game">
+
+<h1>Joel's Six Degrees Wheel</h1>
+
+<div id="mole-layer"></div>
+
+<div class="machine">
+
+  <div class="column" id="actor-one-column">
+    <div class="label">ACTOR 1</div>
+    <div class="reel-window actor-window">
+      <div class="placeholder" id="actor-one-placeholder">?????</div>
+      <div class="reel-strip" id="actor-one"></div>
+    </div>
+  </div>
+
+  <div class="column" id="actor-two-column">
+    <div class="label">ACTOR 2</div>
+    <div class="reel-window actor-window">
+      <div class="placeholder" id="actor-two-placeholder">?????</div>
+      <div class="reel-strip" id="actor-two"></div>
+    </div>
+  </div>
+
+</div>
+
+<button onclick="spinActors()">SPIN</button>
+
+</section>
+
+<section class="game-panel" id="open-game">
+
+<h1>Open Wheelson</h1>
+
+<div class="open-layout">
+
+  <img src="owenwilson.png" id="owen-wilson-cameo" class="owen-cameo" alt="">
+  <div class="owen-speech" id="owen-speech">Hi I'm Open Wheelson.</div>
+
+  <div class="machine open-machine">
+
+    <div class="column">
+      <div class="open-wheel-stage finished" id="open-wheel-stage">
+        <div class="open-card top" id="open-card-top"><span class="open-card-text">Pizza</span></div>
+        <div class="open-card middle" id="open-card-middle"><span class="open-card-text">Tacos</span></div>
+        <div class="open-card bottom" id="open-card-bottom"><span class="open-card-text">Sushi</span></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<textarea class="open-wheel-input" id="open-wheel-input" spellcheck="false">Pizza
+Tacos
+Sushi
+Burgers
+Nachos
+Owen Wilson</textarea>
+<div class="open-note">Put one option per line</div>
+
+<br>
+<button onclick="spinOpenWheel()">SPIN</button>
+
+</section>
+
 <script>
 
 const ITEM_HEIGHT = 220;
 
-const MIN_YEAR = 1940;
+const MIN_YEAR = 1930;
 const MAX_YEAR = 2026;
 const DEFAULT_START_YEAR = 1960;
 const DEFAULT_END_YEAR = 2026;
@@ -450,6 +862,433 @@ const cameos = [
   { file: "chucky.png", type: "peek" }
 ];
 
+const actorListOne = [
+"Jack Nicholson",
+"Robert De Niro",
+"Al Pacino",
+"Dustin Hoffman",
+"Gene Hackman",
+"Harrison Ford",
+"Robert Duvall",
+"Jeff Bridges",
+"Michael Douglas",
+"Kurt Russell",
+"Bill Murray",
+"Chevy Chase",
+"Dan Aykroyd",
+"Steve Martin",
+"Eddie Murphy",
+"Tom Hanks",
+"Kevin Costner",
+"Kevin Kline",
+"Willem Dafoe",
+"Christopher Walken",
+"James Woods",
+"Nick Nolte",
+"Richard Dreyfuss",
+"Danny DeVito",
+"Robin Williams",
+"John Goodman",
+"Jeff Goldblum",
+"John Lithgow",
+"Sam Elliott",
+"Dennis Quaid",
+"John Candy",
+"Martin Short",
+"Rick Moranis",
+"Eugene Levy",
+"Joe Pesci",
+"Harvey Keitel",
+"James Caan",
+"Scott Glenn",
+"Ed Harris",
+"William Hurt",
+"Tom Berenger",
+"James Spader",
+"Kevin Bacon",
+"Dennis Haysbert",
+"Kiefer Sutherland",
+"Charlie Sheen",
+"Emilio Estevez",
+"John Cusack",
+"Tim Curry",
+"Jeremy Irons",
+"Gary Oldman",
+"Liam Neeson",
+"Alan Rickman",
+"Malcolm McDowell",
+"Ian McKellen",
+"Patrick Stewart",
+"Brian Cox",
+"Ben Kingsley",
+"Bob Hoskins",
+"Jonathan Pryce",
+"John Hurt",
+"Donald Sutherland",
+"Donald Pleasence",
+"Max von Sydow",
+"Rutger Hauer",
+"Christopher Lee",
+"Vincent Price",
+"James Earl Jones",
+"Carl Weathers",
+"Danny Glover",
+"Morgan Freeman",
+"Laurence Fishburne",
+"Keith David",
+"Wesley Snipes",
+"Denzel Washington",
+"Forest Whitaker",
+"Ernie Hudson",
+"Tony Todd",
+"Bruce Campbell",
+"Lance Henriksen",
+"Michael Biehn",
+"Bill Paxton",
+"Powers Boothe",
+"Clancy Brown",
+"Michael Ironside",
+"Ron Perlman",
+"Stephen Root",
+"Harry Dean Stanton",
+"Dean Stockwell",
+"Richard Jenkins",
+"James Remar",
+"William Sadler",
+"Joe Pantoliano",
+"John Turturro",
+"Steve Buscemi",
+"John C. Reilly",
+"Philip Baker Hall",
+"James Cromwell",
+"Fred Ward",
+"Richard Kind",
+"Wallace Shawn",
+"Meryl Streep",
+"Sigourney Weaver",
+"Susan Sarandon",
+"Glenn Close",
+"Jessica Lange",
+"Sissy Spacek",
+"Sally Field",
+"Diane Keaton",
+"Goldie Hawn",
+"Bette Midler",
+"Jamie Lee Curtis",
+"Geena Davis",
+"Michelle Pfeiffer",
+"Holly Hunter",
+"Kathy Bates",
+"Frances McDormand",
+"Glenn Headly",
+"Laura Dern",
+"Debra Winger",
+"Daryl Hannah",
+"Kim Basinger",
+"Linda Hamilton",
+"Kathleen Turner",
+"Anjelica Huston",
+"Cher",
+"Whoopi Goldberg",
+"Angela Bassett",
+"Alfre Woodard",
+"Pam Grier",
+"Whitney Houston",
+"Keannu Reeves",
+"Kathy Najimy",
+"Jennifer Jason Leigh",
+"Joan Cusack",
+"Andie MacDowell",
+"Mary Steenburgen",
+"Stockard Channing",
+"Carrie Fisher",
+"Carrie-Anne Moss ",
+"Beverly D'Angelo",
+"Dee Wallace",
+"Barbara Crampton",
+"Adrienne Barbeau",
+"Veronica Cartwright",
+"Karen Allen",
+"Amy Madigan",
+"Annette Bening",
+"Teri Garr",
+"Bonnie Bedelia",
+"Frances Fisher",
+"Regina King",
+"Virginia Madsen",
+"Jennifer Tilly",
+"Lorraine Bracco",
+"Mimi Rogers",
+"Mary Elizabeth Mastrantonio",
+"Ellen Barkin",
+"Rosanna Arquette",
+"Patricia Arquette",
+"Winona Ryder",
+"Juliette Lewis",
+"Ann Dowd",
+"Regina Hall",
+"Jada Pinkett Smith",
+"Queen Latifah",
+"Margo Martindale",
+"CCH Pounder",
+"Laurie Metcalf",
+"Patricia Clarkson",
+"Allison Janney",
+"Joan Allen",
+"Marcia Gay Harden",
+"Frances Sternhagen",
+"Holland Taylor",
+"Linda Hunt",
+"Vivica A Fox",
+"Cybil Shepherd",
+"Miranda Richardson",
+"Cloris Leachman",
+"Emma Thompson",
+"Kristin Scott Thomas",
+"Harriet Walter",
+"Julie Walters",
+"Vanessa Redgrave",
+"Helen Mirren",
+"Judi Dench",
+"Maggie Smith",
+"Kelly Preston",
+"Charlotte Rampling",
+"Isabelle Huppert",
+"Jessica Tandy",
+"Gena Rowlands",
+"Olivia Newton John",
+"Greta Scacchi",
+"Isabella Rossellini",
+"Debra Winger",
+"Jane Seymour",
+"Bonnie Hunt",
+"Jennifer Beals",
+"Lea Thompson",
+"Meg Ryan",
+"Gregory Hines",
+"Gregory Peck",
+"Mel Brooks",
+"Burt Reynolds",
+"Jean Claude Van Damme",
+"Arnold Schwarzenegger",
+"Dolph Lundgren",
+"Jackie Chan",
+"Kim Basinger",
+"Rebecca De Mornay",
+"Kirk Douglas",
+"Charlie Chaplin",
+"Humphrey Bogart",
+"Tara Reid",
+"Val Kilmer"
+];
+
+const actorListTwo = [
+"Leonardo DiCaprio",
+"Matt Damon",
+"Ben Affleck",
+"Joaquin Phoenix",
+"Christian Bale",
+"Mark Ruffalo",
+"Paul Rudd",
+"Ryan Gosling",
+"Ryan Reynolds",
+"Jake Gyllenhaal",
+"Joseph Gordon-Levitt",
+"Jesse Eisenberg",
+"Michael Cera",
+"Seth Rogen",
+"Jonah Hill",
+"Jason Segel",
+"Jay Baruchel",
+"Justin Long",
+"Emile Hirsch",
+"Shia LaBeouf",
+"Andrew Garfield",
+"Tom Holland",
+"Robert Pattinson",
+"Daniel Radcliffe",
+"Rupert Grint",
+"Elijah Wood",
+"Orlando Bloom",
+"Chris Evans",
+"Chris Hemsworth",
+"Tom Hiddleston",
+"Sebastian Stan",
+"Anthony Mackie",
+"Benedict Cumberbatch",
+"Martin Freeman",
+"Adam Driver",
+"Oscar Isaac",
+"Pedro Pascal",
+"Diego Luna",
+"Gael García Bernal",
+"Dev Patel",
+"Riz Ahmed",
+"Daniel Kaluuya",
+"John Boyega",
+"Lakeith Stanfield",
+"Donald Glover",
+"Michael B. Jordan",
+"Mahershala Ali",
+"Brian Tyree Henry",
+"Aldis Hodge",
+"Steven Yeun",
+"John Cho",
+"Simu Liu",
+"Ke Huy Quan",
+"Cillian Murphy",
+"Colin Farrell",
+"Brendan Gleeson",
+"Domhnall Gleeson",
+"Mads Mikkelsen",
+"Alexander Skarsgård",
+"Bill Skarsgård",
+"Timothee Chalamet",
+"Ken Marino",
+"Ben Mendelsohn",
+"Joel Edgerton",
+"Jason Clarke",
+"Sam Rockwell",
+"Michael Shannon",
+"Jesse Plemons",
+"Walton Goggins",
+"Timothy Olyphant",
+"Shea Whigham",
+"Scoot McNairy",
+"Garret Dillahunt",
+"David Dastmalchian",
+"Paul Walter Hauser",
+"John Hawkes",
+"Bill Camp",
+"Patrick Fischler",
+"Michael Stuhlbarg",
+"Toby Jones",
+"Eddie Marsan",
+"Stephen Graham",
+"Burn Gorman",
+"David Harbour",
+"Rami Malek",
+"Paul Dano",
+"Barry Keoghan",
+"Paul Mescal",
+"Austin Butler",
+"Glen Powell",
+"Nicholas Hoult",
+"Jack Quaid",
+"Taron Egerton",
+"Aaron Taylor-Johnson",
+"Jeremy Allen White",
+"Jack Black",
+"Steve Carell",
+"Will Ferrell",
+"Bill Hader",
+"Scott Adkins",
+"Bob Odenkirk",
+"Cate Blanchett",
+"Charlize Theron",
+"Nicole Kidman",
+"Sandra Bullock",
+"Kate Winslet",
+"Naomi Watts",
+"Rachel Weisz",
+"Emily Blunt",
+"Amy Adams",
+"Jessica Chastain",
+"Viola Davis",
+"Octavia Spencer",
+"Zendaya",
+"Taraji P. Henson",
+"Lupita Nyong'o",
+"Angela Bassett",
+"Kerry Washington",
+"Rosario Dawson",
+"Zoe Saldaña",
+"Thandiwe Newton",
+"Natalie Portman",
+"Scarlett Johansson",
+"Anne Hathaway",
+"Emma Stone",
+"Jennifer Lawrence",
+"Florence Pugh",
+"Saoirse Ronan",
+"Margot Robbie",
+"Anya Taylor-Joy",
+"Mia Goth",
+"Dakota Fanning",
+"Elle Fanning",
+"Kristen Stewart",
+"Brie Larson",
+"Rachel McAdams",
+"Amanda Seyfried",
+"Michelle Williams",
+"Carey Mulligan",
+"Rooney Mara",
+"Greta Gerwig",
+"Rebecca Hall",
+"Rose Byrne",
+"Emily Mortimer",
+"Olivia Colman",
+"Jessie Buckley",
+"Jodie Comer",
+"Phoebe Waller-Bridge",
+"Ruth Negga",
+"Gugu Mbatha-Raw",
+"Cynthia Erivo",
+"Tessa Thompson",
+"Zazie Beetz",
+"Aubrey Plaza",
+"Kathryn Hahn",
+"Judy Greer",
+"Melanie Lynskey",
+"Allison Brie",
+"Lizzy Caplan",
+"Sarah Paulson",
+"Carrie Coon",
+"Toni Collette",
+"Vera Farmiga",
+"Taissa Farmiga",
+"Elizabeth Olsen",
+"Mary Elizabeth Winstead",
+"Alison Pill",
+"Mackenzie Davis",
+"Betty Gilpin",
+"Cristin Milioti",
+"Anna Kendrick",
+"Mary Elizabeth Ellis",
+"Gillian Jacobs",
+"Natasha Lyonne",
+"Maggie Grace",
+"Wunmi Mosaku",
+"Hong Chau",
+"Stephanie Hsu",
+"Greta Lee",
+"Kelly Marie Tran",
+"Awkwafina",
+"Anna Faris",
+"Isla Fisher",
+"Rebel Wilson",
+"Kristen Wiig",
+"Maya Rudolph",
+"Linda Cardellini",
+"Carla Gugino",
+"Winona Ryder ",
+"Christina Ricci",
+"Alison Janney ",
+"Parker Posey",
+"Jennifer Coolidge",
+"Catherine O'Hara",
+"Toni Collette",
+"Jamie Chung",
+"Samara Weaving",
+"Maika Monroe",
+"Kathryn Newton",
+"Margaret Qualley",
+"Jenna Ortega",
+"Kevin Smith",
+"Fergie",
+"Austin Abrams"
+];
+
 function random(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -496,10 +1335,20 @@ function buildReel(el, data) {
 const yearEl = document.getElementById("year");
 const genreEl = document.getElementById("genre");
 const wildEl = document.getElementById("wild");
+const actorOneEl = document.getElementById("actor-one");
+const actorTwoEl = document.getElementById("actor-two");
+const openWheelStageEl = document.getElementById("open-wheel-stage");
+const openCardTopEl = document.getElementById("open-card-top");
+const openCardMiddleEl = document.getElementById("open-card-middle");
+const openCardBottomEl = document.getElementById("open-card-bottom");
+const openWheelInputEl = document.getElementById("open-wheel-input");
 const yearStartEl = document.getElementById("year-start");
 const yearEndEl = document.getElementById("year-end");
 const cameoBackLayer = document.getElementById("cameo-back-layer");
 const cameoFrontLayer = document.getElementById("cameo-front-layer");
+const moleLayer = document.getElementById("mole-layer");
+const owenWilsonCameoEl = document.getElementById("owen-wilson-cameo");
+const owenSpeechEl = document.getElementById("owen-speech");
 
 fillYearMenu(yearStartEl, DEFAULT_START_YEAR);
 fillYearMenu(yearEndEl, DEFAULT_END_YEAR);
@@ -525,6 +1374,95 @@ yearEndEl.addEventListener("change", updateYearsFromMenus);
 updateYearsFromMenus();
 buildReel(genreEl, genres);
 buildReel(wildEl, wildcards);
+buildReel(actorOneEl, actorListOne);
+buildReel(actorTwoEl, actorListTwo);
+updateOpenWheelFromInput();
+
+function showGame(gameName) {
+  document.querySelectorAll(".game-panel").forEach(panel => {
+    panel.classList.remove("active");
+  });
+  document.querySelectorAll(".tab-button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  document.getElementById(`${gameName}-game`).classList.add("active");
+  document.getElementById(`${gameName}-tab`).classList.add("active");
+}
+
+function getOpenWheelItems() {
+  return openWheelInputEl.value
+    .split(/\r?\n/)
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+}
+
+function updateOpenWheelFromInput() {
+  setOpenWheelResult("Go Ahead, Make your List");
+}
+
+function setOpenCardText(card, text) {
+  card.querySelector(".open-card-text").textContent = text;
+}
+
+function setOpenCardColor(card, index) {
+  const colors = ["#ff9f1c", "#2ec4b6", "#ff5d8f", "#f9dc5c", "#b8f35a", "#c77dff"];
+  card.style.background = colors[index % colors.length];
+}
+
+function setOpenWheelResult(text, colorIndex = 0, shouldPop = false) {
+  openWheelStageEl.classList.add("finished");
+  openWheelStageEl.style.transform = "";
+
+  openCardMiddleEl.classList.remove("winner-pop");
+  openCardTopEl.classList.remove("toss-left");
+  openCardBottomEl.classList.remove("toss-right");
+  setOpenCardText(openCardTopEl, "");
+  setOpenCardText(openCardBottomEl, "");
+  openCardTopEl.style.display = "none";
+  openCardBottomEl.style.display = "none";
+
+  setOpenCardText(openCardMiddleEl, text);
+  setOpenCardColor(openCardMiddleEl, colorIndex);
+  openCardMiddleEl.style.display = "flex";
+  positionOpenCard(openCardMiddleEl, 0, true);
+
+  if (shouldPop) {
+    requestAnimationFrame(() => {
+      openCardMiddleEl.classList.add("winner-pop");
+    });
+  }
+}
+
+openWheelInputEl.addEventListener("input", updateOpenWheelFromInput);
+
+function positionOpenCard(card, angle, isFinal = false, trackScale = 1) {
+  if (isFinal) {
+    card.style.left = "50%";
+    card.style.top = "50%";
+    card.style.opacity = "1";
+    card.style.zIndex = "2";
+    card.style.transform = "translate(-50%, -50%) rotate(0deg) scale(1.08)";
+    return;
+  }
+
+  const centerX = 310;
+  const centerY = 165;
+  const radiusX = 190;
+  const radiusY = 82;
+  const x = centerX + Math.cos(angle) * radiusX * trackScale;
+  const y = centerY + Math.sin(angle) * radiusY * trackScale;
+  const frontness = (Math.cos(angle) + 1) / 2;
+  const scale = 0.82 + frontness * 0.26 * trackScale;
+  const tilt = Math.sin(angle) * 7 * trackScale;
+
+  card.style.display = "flex";
+  card.style.left = `${x}px`;
+  card.style.top = `${y}px`;
+  card.style.opacity = `${0.55 + frontness * 0.45}`;
+  card.style.zIndex = `${Math.round(frontness * 10) + 1}`;
+  card.style.transform = `translate(-50%, -50%) rotate(${tilt}deg) scale(${scale})`;
+}
 
 function snap(el, target) {
   el.style.transform = `translateY(${-target * ITEM_HEIGHT}px)`;
@@ -628,6 +1566,211 @@ function playSpinCameo() {
 
 let placeholdersHidden = false;
 let isSpinning = false;
+let actorPlaceholdersHidden = false;
+let isActorSpinning = false;
+let moleTimers = [];
+let isOpenSpinning = false;
+
+function clearMoles() {
+  moleTimers.forEach(timer => clearTimeout(timer));
+  moleTimers = [];
+  moleLayer.innerHTML = "";
+}
+
+function popFaceMole(boxEl, side) {
+  const box = boxEl.getBoundingClientRect();
+  const moleWindow = document.createElement("div");
+  const moleFace = document.createElement("img");
+
+  moleWindow.className = `mole-window mole-${side}`;
+
+  if (side === "left") {
+    moleWindow.style.left = `${box.left - 175}px`;
+    moleWindow.style.top = `${box.top + box.height / 2 - 87.5}px`;
+  }
+
+  if (side === "right") {
+    moleWindow.style.left = `${box.right}px`;
+    moleWindow.style.top = `${box.top + box.height / 2 - 87.5}px`;
+  }
+
+  if (side === "bottom") {
+    moleWindow.style.left = `${box.left + box.width / 2 - 87.5}px`;
+    moleWindow.style.top = `${box.bottom}px`;
+  }
+
+  moleFace.className = "mole-face";
+  moleFace.src = "face.png";
+  moleFace.alt = "";
+
+  moleWindow.appendChild(moleFace);
+  moleLayer.appendChild(moleWindow);
+  moleFace.addEventListener("animationend", () => {
+    moleWindow.remove();
+  }, { once: true });
+}
+
+function spinActors() {
+  if (isActorSpinning) return;
+  isActorSpinning = true;
+  clearMoles();
+
+  if (!actorPlaceholdersHidden) {
+    document.querySelectorAll("#six-game .placeholder").forEach(p => {
+      p.style.display = "none";
+    });
+    actorPlaceholdersHidden = true;
+  }
+
+  const actorBoxes = [
+    document.querySelector("#actor-one-column .reel-window"),
+    document.querySelector("#actor-two-column .reel-window")
+  ];
+  const firstBoxIndex = Math.floor(Math.random() * actorBoxes.length);
+  const boxOrder = [
+    actorBoxes[firstBoxIndex],
+    actorBoxes[1 - firstBoxIndex],
+    actorBoxes[firstBoxIndex]
+  ];
+  const sideOrder = shuffled(["left", "right", "bottom"]);
+
+  moleTimers = [500, 1650, 2800].map((delay, index) => {
+    return setTimeout(() => popFaceMole(boxOrder[index], sideOrder[index]), delay);
+  });
+
+  const startTime = performance.now();
+  const reels = [
+    { el: actorOneEl, list: actorListOne, duration: 4100 },
+    { el: actorTwoEl, list: actorListTwo, duration: 4700 }
+  ].map(r => ({
+    el: r.el,
+    target: r.list.length * 2 + Math.floor(Math.random() * r.list.length),
+    duration: r.duration,
+    done: false
+  }));
+
+  function ease(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate() {
+    const now = performance.now();
+    let allDone = true;
+
+    reels.forEach(r => {
+      if (r.done) return;
+
+      const t = Math.min((now - startTime) / r.duration, 1);
+      const e = ease(t);
+      const pos = e * (r.target * ITEM_HEIGHT);
+
+      r.el.style.transform = `translateY(${-pos}px)`;
+
+      if (t >= 1) {
+        r.done = true;
+        snap(r.el, r.target);
+      } else {
+        allDone = false;
+      }
+    });
+
+    if (!allDone) {
+      requestAnimationFrame(animate);
+    } else {
+      reels.forEach(r => snap(r.el, r.target));
+      isActorSpinning = false;
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function spinOpenWheel() {
+  if (isOpenSpinning) return;
+
+  const items = getOpenWheelItems();
+  if (items.length === 0) {
+    alert("Add at least one thing to spin.");
+    return;
+  }
+
+  isOpenSpinning = true;
+  openWheelStageEl.classList.remove("finished");
+  owenSpeechEl.classList.add("hidden");
+  owenWilsonCameoEl.classList.remove("active");
+  void owenWilsonCameoEl.offsetWidth;
+  owenWilsonCameoEl.classList.add("active");
+  [openCardTopEl, openCardMiddleEl, openCardBottomEl].forEach(card => {
+    card.classList.remove("winner-pop", "toss-left", "toss-right");
+    card.style.display = "flex";
+  });
+
+  const startTime = performance.now();
+  const finalIndex = Math.floor(Math.random() * items.length);
+  const duration = 3800;
+  const cards = [openCardTopEl, openCardMiddleEl, openCardBottomEl];
+  const fullTurns = 10;
+  let lastBaseIndex = null;
+  let tossStarted = false;
+
+  function ease(t) {
+    return 1 - Math.pow(1 - t, 2.6);
+  }
+
+  function animate() {
+    const now = performance.now();
+    const t = Math.min((now - startTime) / duration, 1);
+    const spinAmount = fullTurns * Math.PI * 2 * ease(t);
+    const baseIndex = Math.floor(spinAmount / (Math.PI / 1.15));
+    const finishT = Math.max(0, (t - 0.82) / 0.18);
+    const trackScale = 1 - finishT;
+
+    if (finishT === 0 && baseIndex !== lastBaseIndex) {
+      lastBaseIndex = baseIndex;
+      cards.forEach((card, index) => {
+        const optionIndex = (baseIndex + index * 2) % items.length;
+        card.dataset.optionIndex = optionIndex;
+        setOpenCardText(card, items[optionIndex]);
+        setOpenCardColor(card, optionIndex);
+      });
+    }
+
+    if (!tossStarted && finishT > 0.45) {
+      tossStarted = true;
+      openCardTopEl.classList.add("toss-left");
+      openCardBottomEl.classList.add("toss-right");
+    }
+
+    cards.forEach((card, index) => {
+      const angle = spinAmount + (index - 1) * ((Math.PI * 2) / 3);
+      if (tossStarted && index !== 1) return;
+
+      if (finishT > 0 && index === 1) {
+        card.dataset.optionIndex = finalIndex;
+        setOpenCardText(card, items[finalIndex]);
+        setOpenCardColor(card, finalIndex);
+      }
+      positionOpenCard(card, angle, false, index === 1 ? trackScale : 1);
+      if (finishT > 0 && index !== 1) {
+        card.style.opacity = "1";
+      }
+    });
+
+    openWheelStageEl.style.transform = `rotate(${Math.sin(spinAmount) * 1.5 * trackScale}deg)`;
+
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      openWheelStageEl.style.transform = "";
+      setTimeout(() => {
+        setOpenWheelResult(items[finalIndex], finalIndex, true);
+        isOpenSpinning = false;
+      }, 60);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
 
 function spin() {
   if (isSpinning) return;
@@ -700,3 +1843,4 @@ function spin() {
 
 </body>
 </html>
+
