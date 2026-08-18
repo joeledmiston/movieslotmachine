@@ -59,6 +59,18 @@
       font-size: 56px;
     }
 
+    #chaos-game h1 {
+      margin-bottom: 8px;
+      color: #9b0000;
+      text-shadow: 2px 2px #ffef00, 4px 4px black;
+    }
+
+    #chaos-game {
+      position: relative;
+      overflow: hidden;
+      min-height: 660px;
+    }
+
     .open-layout {
       position: relative;
       width: 820px;
@@ -73,13 +85,56 @@
       box-shadow: 0 0 0 3px black;
     }
 
+    .chaos-face-wrap {
+      position: relative;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .chaos-horns {
+      position: absolute;
+      top: 12px;
+      left: 48px;
+      width: 72px;
+      height: 34px;
+      z-index: 2;
+      overflow: visible;
+      filter: drop-shadow(2px 2px 0 black);
+    }
+
+    .left-horn {
+      transform-origin: 28px 43px;
+      transform: rotate(-15deg);
+    }
+
+    .right-horn {
+      transform-origin: 76px 43px;
+      transform: rotate(15deg);
+    }
+
+    #chaos-face {
+      width: 150px;
+      border: 5px outset #b00000;
+      box-shadow: 0 0 0 3px black, 0 0 20px red;
+      filter: sepia(1) saturate(5) hue-rotate(332deg) brightness(0.78) contrast(1.22);
+    }
+
     .spinning {
       animation: spinny 0.8s linear infinite;
+    }
+
+    .chaos-head-spinning {
+      animation: chaosHeadSpin 4.3s cubic-bezier(0.12, 0.82, 0.2, 1) forwards;
     }
 
     @keyframes spinny {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
+    }
+
+    @keyframes chaosHeadSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(720deg); }
     }
 
     .machine {
@@ -174,6 +229,59 @@
     #actor-one .item { background: #ddffdd; }
     #actor-two .item { background: #ffe1f3; }
     #open-wheel .item { background: #eeeeff; }
+    #chaos-one .item { background: #ffd0d0; }
+    #chaos-two .item { background: #ffe29a; }
+    #chaos-three .item { background: #ddfffb; }
+    #chaos-four .item { background: #f1d4ff; }
+
+    .chaos-machine {
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .chaos-window {
+      width: 178px;
+    }
+
+    .chaos-window .item {
+      font-size: 15px;
+      padding: 10px;
+    }
+
+    .chaos-animal {
+      position: absolute;
+      top: 315px;
+      left: -210px;
+      width: 245px;
+      z-index: 90;
+      display: none;
+      pointer-events: none;
+      transform-origin: center center;
+      filter: drop-shadow(4px 4px 0 black);
+    }
+
+    .chaos-animal.active {
+      display: block;
+      animation: animalCartwheel 4.3s cubic-bezier(0.18, 0.72, 0.22, 1) forwards;
+    }
+
+    @keyframes animalCartwheel {
+      0% {
+        transform: translateX(0) rotate(0deg) scale(1);
+      }
+      20% {
+        transform: translateX(calc(20vw + 70px)) rotate(360deg) scale(1.12);
+      }
+      50% {
+        transform: translateX(calc(50vw + 90px)) rotate(900deg) scale(0.95);
+      }
+      78% {
+        transform: translateX(calc(78vw + 120px)) rotate(1440deg) scale(1.08);
+      }
+      100% {
+        transform: translateX(calc(100vw + 260px)) rotate(1800deg) scale(1);
+      }
+    }
 
     .actor-window {
       width: 260px;
@@ -181,6 +289,45 @@
 
     .actor-window .item {
       font-size: 17px;
+    }
+
+    .six-timer {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: fit-content;
+      margin: 22px auto 0;
+      padding: 10px 14px;
+      background: #ddffdd;
+      border: 4px ridge gray;
+      font-family: monospace;
+      box-sizing: border-box;
+    }
+
+    .six-timer.active {
+      display: flex;
+    }
+
+    .six-timer-label {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .six-timer-time {
+      min-width: 86px;
+      font-size: 26px;
+      color: #001a9b;
+      background: white;
+      border: 3px inset gray;
+      padding: 4px 8px;
+      box-sizing: border-box;
+    }
+
+    .six-timer button {
+      margin-top: 0;
+      padding: 8px 14px;
+      font-size: 16px;
     }
 
     .open-wheel-input {
@@ -678,6 +825,7 @@
   <button class="tab-button active" id="movie-tab" onclick="showGame('movie')">Movie Slot</button>
   <button class="tab-button" id="six-tab" onclick="showGame('six')">Six Degrees</button>
   <button class="tab-button" id="open-tab" onclick="showGame('open')">Open Wheelson</button>
+  <button class="tab-button" id="chaos-tab" onclick="showGame('chaos')">Chaos Wheel</button>
 </div>
 
 <section class="game-panel active" id="movie-game">
@@ -754,6 +902,12 @@
 
 </div>
 
+<div class="six-timer" id="six-timer">
+  <span class="six-timer-label">TIMER</span>
+  <span class="six-timer-time" id="six-timer-time">0.0</span>
+  <button type="button" onclick="stopSixTimer()">STOP</button>
+</div>
+
 <button onclick="spinActors()">SPIN</button>
 
 </section>
@@ -791,6 +945,78 @@ Owen Wilson</textarea>
 
 <br>
 <button onclick="spinOpenWheel()">SPIN</button>
+
+</section>
+
+<section class="game-panel" id="chaos-game">
+
+<h1>🔥 JOEL'S CHAOS WHEEL 🔥</h1>
+
+<div class="chaos-face-wrap" id="chaos-face-wrap">
+  <svg class="chaos-horns" viewBox="0 0 104 48" aria-hidden="true">
+    <defs>
+      <linearGradient id="horn-red" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff2b1f"/>
+        <stop offset="58%" stop-color="#f00000"/>
+        <stop offset="100%" stop-color="#a00000"/>
+      </linearGradient>
+      <radialGradient id="horn-shine" cx="38%" cy="20%" r="42%">
+        <stop offset="0%" stop-color="#ffb0a0"/>
+        <stop offset="38%" stop-color="#ff7466"/>
+        <stop offset="100%" stop-color="#f00000" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <g class="left-horn">
+      <path d="M8 43 C11 28 20 10 34 3 C30 17 35 33 47 44 Z" fill="url(#horn-red)" stroke="black" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M8 43 C11 28 20 10 34 3 C30 17 35 33 47 44 Z" fill="url(#horn-shine)"/>
+    </g>
+    <g class="right-horn">
+      <path d="M96 43 C93 28 84 10 70 3 C74 17 69 33 57 44 Z" fill="url(#horn-red)" stroke="black" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M96 43 C93 28 84 10 70 3 C74 17 69 33 57 44 Z" fill="url(#horn-shine)"/>
+    </g>
+  </svg>
+  <img src="face.png" id="chaos-face" alt="">
+</div>
+
+<img src="animal.png" id="chaos-animal" class="chaos-animal" alt="">
+
+<div class="machine chaos-machine">
+
+  <div class="column">
+    <div class="label">WILDCARD 1</div>
+    <div class="reel-window chaos-window">
+      <div class="placeholder" id="chaos-one-placeholder">?????</div>
+      <div class="reel-strip" id="chaos-one"></div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="label">WILDCARD 2</div>
+    <div class="reel-window chaos-window">
+      <div class="placeholder" id="chaos-two-placeholder">?????</div>
+      <div class="reel-strip" id="chaos-two"></div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="label">WILDCARD 3</div>
+    <div class="reel-window chaos-window">
+      <div class="placeholder" id="chaos-three-placeholder">?????</div>
+      <div class="reel-strip" id="chaos-three"></div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="label">WILDCARD 4</div>
+    <div class="reel-window chaos-window">
+      <div class="placeholder" id="chaos-four-placeholder">?????</div>
+      <div class="reel-strip" id="chaos-four"></div>
+    </div>
+  </div>
+
+</div>
+
+<button onclick="spinChaos()">SPIN</button>
 
 </section>
 
@@ -852,6 +1078,74 @@ const wildcards = [
 "Main actor has been in a movie with Samuel L Jackson",
 "Main Actor has been in a movie directed by Ridley Scott",
 "Starring someone who has been in a movie with a former SNL cast member"
+];
+
+const chaosListOne = [
+"Starring an actor known better for a TV show",
+"Starring an actor who has been in Star Wars or Marvel",
+"Starring an Oscar winner",
+"Starring someone who was in one of the last five movies I’ve watched",
+"First billed star starts with a J",
+"Main Actor is British",
+"Main Actor is born somewhere other than America",
+"Has an actor that has appeared in at least one episode of of Law and Order (or an iteration of it)",
+"Main actor has been in a movie with Samuel L Jackson",
+"Main Actor has been in a movie directed by Ridley Scott",
+"Starring someone who has been in a movie with a former SNL cast member",
+"Starring someone in The Odyssey (2026)",
+"Starring someone named John",
+"Main actor has at some point been married to another famous actor",
+"An actor in it has co starred in a movie with Ben Stiller",
+"Starring someone who has been directed by Martin Scorsese",
+"Starring Someone who has been directed by Steven Spielberg"
+];
+
+const chaosListTwo = [
+"Based on a book",
+"In the top 20 box office of the year",
+"Not in the top 20 box office of the year it came out",
+"Someone gets murdered in it",
+"Lead character is a woman",
+"A character is a detective",
+"A character is named John",
+"A character is a lawyer",
+"Has a cat in it",
+"Has a dog in it",
+"Shot in Canada",
+"Rated under 70% on Rotten Tomatoes",
+"Roger Ebert gave it a positive review (or a Thumbs Up, depending on when it came out)",
+"Under 50 thousand Letterboxd members have logged it"
+];
+
+const chaosListThree = [
+"Is mentioned by a fuckin celebrity in one of those fuckin Letterboxd top 4 vids",
+"Has the word “The” in the title",
+"Starts with S (not including the, a or an)",
+"Starts with T (not including the, a or an)",
+"Starts with R (not including the, a or an)",
+"Has the letter w somewhere in the title",
+"A noun is in the title",
+"The poster has a lot of red on it.",
+"The poster has a lot of blue on it.",
+"The main character is smiling on the poster"
+];
+
+const chaosListFour = [
+"(Things you discover while watching)",
+"Main Character’s has the same name as my friend or family member (or me, even)",
+"A song (not written for the movie) played by an artist starting with t plays at some point in the movie.",
+"At one point in the movie, someone holds a gun.",
+"A character wears a cowboy hat at some point",
+"Someone wears glasses",
+"The word “think” is somewhere in the imdb quotes page",
+"There is a scene at a restaurant",
+"A character has the same name as someone you dated or are dating",
+"Made by a non-American",
+"Directorial Debut",
+"Director is British",
+"The director’s next movie stars an actor with the initials J.S or J.B (doesn’t need to be main actor)",
+"Someone involved with movie (actor, director, etc) has published a book",
+"Director is no longer alive"
 ];
 
 const cameos = [
@@ -1340,6 +1634,11 @@ const genreEl = document.getElementById("genre");
 const wildEl = document.getElementById("wild");
 const actorOneEl = document.getElementById("actor-one");
 const actorTwoEl = document.getElementById("actor-two");
+const chaosOneEl = document.getElementById("chaos-one");
+const chaosTwoEl = document.getElementById("chaos-two");
+const chaosThreeEl = document.getElementById("chaos-three");
+const chaosFourEl = document.getElementById("chaos-four");
+const chaosAnimalEl = document.getElementById("chaos-animal");
 const openWheelStageEl = document.getElementById("open-wheel-stage");
 const openCardTopEl = document.getElementById("open-card-top");
 const openCardMiddleEl = document.getElementById("open-card-middle");
@@ -1352,6 +1651,8 @@ const cameoFrontLayer = document.getElementById("cameo-front-layer");
 const moleLayer = document.getElementById("mole-layer");
 const owenWilsonCameoEl = document.getElementById("owen-wilson-cameo");
 const owenSpeechEl = document.getElementById("owen-speech");
+const sixTimerEl = document.getElementById("six-timer");
+const sixTimerTimeEl = document.getElementById("six-timer-time");
 
 fillYearMenu(yearStartEl, DEFAULT_START_YEAR);
 fillYearMenu(yearEndEl, DEFAULT_END_YEAR);
@@ -1379,6 +1680,10 @@ buildReel(genreEl, genres);
 buildReel(wildEl, wildcards);
 buildReel(actorOneEl, actorListOne);
 buildReel(actorTwoEl, actorListTwo);
+buildReel(chaosOneEl, chaosListOne);
+buildReel(chaosTwoEl, chaosListTwo);
+buildReel(chaosThreeEl, chaosListThree);
+buildReel(chaosFourEl, chaosListFour);
 updateOpenWheelFromInput();
 
 function showGame(gameName) {
@@ -1569,10 +1874,15 @@ function playSpinCameo() {
 
 let placeholdersHidden = false;
 let isSpinning = false;
+let movieFirstSpinRigged = true;
 let actorPlaceholdersHidden = false;
 let isActorSpinning = false;
 let moleTimers = [];
 let isOpenSpinning = false;
+let chaosPlaceholdersHidden = false;
+let isChaosSpinning = false;
+let sixTimerStartTime = 0;
+let sixTimerFrame = null;
 
 function clearMoles() {
   moleTimers.forEach(timer => clearTimeout(timer));
@@ -1613,17 +1923,56 @@ function popFaceMole(boxEl, side) {
   }, { once: true });
 }
 
+function formatSixTimer(ms) {
+  const totalTenths = Math.floor(ms / 100);
+  const minutes = Math.floor(totalTenths / 600);
+  const seconds = Math.floor((totalTenths % 600) / 10);
+  const tenths = totalTenths % 10;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}.${tenths}`;
+}
+
+function stopSixTimer() {
+  if (sixTimerFrame !== null) {
+    cancelAnimationFrame(sixTimerFrame);
+    sixTimerFrame = null;
+  }
+}
+
+function resetSixTimer() {
+  stopSixTimer();
+  sixTimerEl.classList.remove("active");
+  sixTimerTimeEl.textContent = "0.0";
+}
+
+function startSixTimer() {
+  stopSixTimer();
+  sixTimerStartTime = performance.now();
+  sixTimerTimeEl.textContent = "0.0";
+  sixTimerEl.classList.add("active");
+
+  function tick() {
+    sixTimerTimeEl.textContent = formatSixTimer(performance.now() - sixTimerStartTime);
+    sixTimerFrame = requestAnimationFrame(tick);
+  }
+
+  tick();
+}
+
 function spinActors() {
   if (isActorSpinning) return;
   isActorSpinning = true;
   clearMoles();
+  resetSixTimer();
 
-  if (!actorPlaceholdersHidden) {
-    document.querySelectorAll("#six-game .placeholder").forEach(p => {
-      p.style.display = "none";
-    });
-    actorPlaceholdersHidden = true;
-  }
+  document.querySelectorAll("#six-game .placeholder").forEach(p => {
+    p.style.display = "none";
+  });
+  actorPlaceholdersHidden = true;
+
+  buildReel(actorOneEl, actorListOne);
+  buildReel(actorTwoEl, actorListTwo);
+  snap(actorOneEl, 0);
+  snap(actorTwoEl, 0);
 
   const actorBoxes = [
     document.querySelector("#actor-one-column .reel-window"),
@@ -1643,17 +1992,22 @@ function spinActors() {
 
   const startTime = performance.now();
   const reels = [
-    { el: actorOneEl, list: actorListOne, duration: 4100 },
-    { el: actorTwoEl, list: actorListTwo, duration: 4700 }
+    { el: actorOneEl, list: actorListOne, duration: 4500, slowFinish: true },
+    { el: actorTwoEl, list: actorListTwo, duration: 4700, slowFinish: false }
   ].map(r => ({
     el: r.el,
     target: r.list.length * 2 + Math.floor(Math.random() * r.list.length),
     duration: r.duration,
+    slowFinish: r.slowFinish,
     done: false
   }));
 
   function ease(t) {
     return 1 - Math.pow(1 - t, 3);
+  }
+
+  function slowLandingEase(t) {
+    return 1 - Math.pow(1 - t, 5.8);
   }
 
   function animate() {
@@ -1664,7 +2018,7 @@ function spinActors() {
       if (r.done) return;
 
       const t = Math.min((now - startTime) / r.duration, 1);
-      const e = ease(t);
+      const e = r.slowFinish ? slowLandingEase(t) : ease(t);
       const pos = e * (r.target * ITEM_HEIGHT);
 
       r.el.style.transform = `translateY(${-pos}px)`;
@@ -1682,6 +2036,7 @@ function spinActors() {
     } else {
       reels.forEach(r => snap(r.el, r.target));
       isActorSpinning = false;
+      startSixTimer();
     }
   }
 
@@ -1783,7 +2138,7 @@ function spin() {
   playSpinCameo();
 
   if (!placeholdersHidden) {
-    document.querySelectorAll(".placeholder").forEach(p => {
+    document.querySelectorAll("#movie-game .placeholder").forEach(p => {
       p.style.display = "none";
     });
     placeholdersHidden = true;
@@ -1793,11 +2148,84 @@ function spin() {
   face.classList.add("spinning");
 
   const startTime = performance.now();
+  const riggedMovieYearText = "2000";
+  const riggedMovieGenreText = "Drama";
+  const riggedMovieWildcardText = "Is mentioned by a fuckin celebrity in one of those fuckin Letterboxd top 4 vids";
+  const useRiggedMovieSpin = movieFirstSpinRigged;
+  movieFirstSpinRigged = false;
 
   const reels = [
-    { el: yearEl, list: years, duration: 2600 },
-    { el: genreEl, list: genres, duration: 3100 },
-    { el: wildEl, list: wildcards, duration: 3700 }
+    { el: yearEl, list: years, duration: 2600, riggedIndex: useRiggedMovieSpin ? years.indexOf(riggedMovieYearText) : -1 },
+    { el: genreEl, list: genres, duration: 3100, riggedIndex: useRiggedMovieSpin ? genres.indexOf(riggedMovieGenreText) : -1 },
+    { el: wildEl, list: wildcards, duration: 3700, riggedIndex: useRiggedMovieSpin ? wildcards.indexOf(riggedMovieWildcardText) : -1 }
+  ].map(r => ({
+    el: r.el,
+    target: r.list.length * 2 + (r.riggedIndex >= 0 ? r.riggedIndex : Math.floor(Math.random() * r.list.length)),
+    duration: r.duration,
+    done: false
+  }));
+
+  function ease(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate() {
+    const now = performance.now();
+    let allDone = true;
+
+    reels.forEach(r => {
+      if (r.done) return;
+
+      const t = Math.min((now - startTime) / r.duration, 1);
+      const e = ease(t);
+      const pos = e * (r.target * ITEM_HEIGHT);
+
+      r.el.style.transform = `translateY(${-pos}px)`;
+
+      if (t >= 1) {
+        r.done = true;
+        snap(r.el, r.target);
+      } else {
+        allDone = false;
+      }
+    });
+
+    if (!allDone) {
+      requestAnimationFrame(animate);
+    } else {
+      reels.forEach(r => snap(r.el, r.target));
+      face.classList.remove("spinning");
+      isSpinning = false;
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function spinChaos() {
+  if (isChaosSpinning) return;
+  isChaosSpinning = true;
+
+  document.querySelectorAll("#chaos-game .placeholder").forEach(p => {
+    p.style.display = "none";
+  });
+  chaosPlaceholdersHidden = true;
+
+  const chaosFaceWrap = document.getElementById("chaos-face-wrap");
+  chaosFaceWrap.classList.remove("chaos-head-spinning");
+  void chaosFaceWrap.offsetWidth;
+  chaosFaceWrap.classList.add("chaos-head-spinning");
+  chaosAnimalEl.classList.remove("active");
+  void chaosAnimalEl.offsetWidth;
+  chaosAnimalEl.classList.add("active");
+
+  const startTime = performance.now();
+
+  const reels = [
+    { el: chaosOneEl, list: chaosListOne, duration: 2800 },
+    { el: chaosTwoEl, list: chaosListTwo, duration: 3300 },
+    { el: chaosThreeEl, list: chaosListThree, duration: 3800 },
+    { el: chaosFourEl, list: chaosListFour, duration: 4300 }
   ].map(r => ({
     el: r.el,
     target: r.list.length * 2 + Math.floor(Math.random() * r.list.length),
@@ -1834,8 +2262,9 @@ function spin() {
       requestAnimationFrame(animate);
     } else {
       reels.forEach(r => snap(r.el, r.target));
-      face.classList.remove("spinning");
-      isSpinning = false;
+      chaosFaceWrap.classList.remove("chaos-head-spinning");
+      chaosAnimalEl.classList.remove("active");
+      isChaosSpinning = false;
     }
   }
 
