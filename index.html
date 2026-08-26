@@ -1048,7 +1048,7 @@ const wildcards = [
 "Sequel",
 "Has been remade or is a remake",
 "Starring an actor known better for a TV show",
-"Starring an actor who has been in Star Wars or Marvel",
+"Starring an actor who has been in a Star Wars movie",
 "Starring an Oscar winner",
 "Directorial Debut",
 "In the top 20 box office of the year",
@@ -1082,7 +1082,7 @@ const wildcards = [
 
 const chaosListOne = [
 "Starring an actor known better for a TV show",
-"Starring an actor who has been in Star Wars or Marvel",
+"Starring an actor who has been in a Star Wars movie",
 "Starring an Oscar winner",
 "Starring someone who was in one of the last five movies I’ve watched",
 "First billed star starts with a J",
@@ -1874,7 +1874,6 @@ function playSpinCameo() {
 
 let placeholdersHidden = false;
 let isSpinning = false;
-let movieFirstSpinRigged = true;
 let actorPlaceholdersHidden = false;
 let isActorSpinning = false;
 let moleTimers = [];
@@ -2148,19 +2147,14 @@ function spin() {
   face.classList.add("spinning");
 
   const startTime = performance.now();
-  const riggedMovieYearText = "2000";
-  const riggedMovieGenreText = "Drama";
-  const riggedMovieWildcardText = "Is mentioned by a fuckin celebrity in one of those fuckin Letterboxd top 4 vids";
-  const useRiggedMovieSpin = movieFirstSpinRigged;
-  movieFirstSpinRigged = false;
 
   const reels = [
-    { el: yearEl, list: years, duration: 2600, riggedIndex: useRiggedMovieSpin ? years.indexOf(riggedMovieYearText) : -1 },
-    { el: genreEl, list: genres, duration: 3100, riggedIndex: useRiggedMovieSpin ? genres.indexOf(riggedMovieGenreText) : -1 },
-    { el: wildEl, list: wildcards, duration: 3700, riggedIndex: useRiggedMovieSpin ? wildcards.indexOf(riggedMovieWildcardText) : -1 }
+    { el: yearEl, list: years, duration: 2600 },
+    { el: genreEl, list: genres, duration: 3100 },
+    { el: wildEl, list: wildcards, duration: 3700 }
   ].map(r => ({
     el: r.el,
-    target: r.list.length * 2 + (r.riggedIndex >= 0 ? r.riggedIndex : Math.floor(Math.random() * r.list.length)),
+    target: r.list.length * 2 + Math.floor(Math.random() * r.list.length),
     duration: r.duration,
     done: false
   }));
