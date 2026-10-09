@@ -8,6 +8,7 @@
       font-family: "Comic Sans MS", Arial, sans-serif;
       text-align: center;
       background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+      margin: 0;
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
@@ -69,6 +70,266 @@
       position: relative;
       overflow: hidden;
       min-height: 660px;
+    }
+
+    #october-game {
+      position: relative;
+      min-height: calc(100vh - 58px);
+      overflow: hidden;
+      padding: 10px 0 80px;
+      box-sizing: border-box;
+      color: #fff3d6;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 136, 0, 0.34) 0 0.9%, transparent 1% 100%),
+        radial-gradient(circle at 86% 24%, rgba(164, 80, 255, 0.34) 0 1.1%, transparent 1.2% 100%),
+        linear-gradient(135deg, rgba(26, 0, 36, 0.92), rgba(68, 18, 0, 0.88));
+    }
+
+    #october-game h1 {
+      color: #ff8a00;
+      text-shadow: 2px 2px #2b003b, 4px 4px black, 0 0 18px #ffdd55;
+      margin-bottom: 6px;
+    }
+
+    .october-stickers {
+      width: min(760px, 94vw);
+      margin: 0 auto 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 34px;
+      text-shadow: 2px 2px black;
+      pointer-events: none;
+    }
+
+    .october-moon {
+      position: absolute;
+      right: 26px;
+      top: 74px;
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: #fff0a6;
+      box-shadow: 0 0 24px #ffd86b;
+      z-index: 0;
+    }
+
+    .october-bat {
+      position: absolute;
+      top: 112px;
+      right: 74px;
+      font-size: 34px;
+      transform: rotate(-12deg);
+      z-index: 1;
+    }
+
+    .october-face-frame {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 220px;
+      height: 220px;
+      margin: 4px auto 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      z-index: 3;
+    }
+
+    .october-face-frame::before {
+      content: "";
+      display: none;
+    }
+
+    .october-face-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      display: block;
+      background: url("october-bone-frame.webp") center / contain no-repeat;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .skeleton-border {
+      display: none;
+    }
+
+    .bone-frame-layer {
+      display: none;
+    }
+
+    .frame-bone {
+      position: absolute;
+      width: 62px;
+      height: 12px;
+      background: #fff8e8;
+      border: 3px solid #111;
+      border-radius: 999px;
+      box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+    }
+
+    .frame-bone::before,
+    .frame-bone::after {
+      content: "";
+      position: absolute;
+      top: -7px;
+      width: 20px;
+      height: 20px;
+      background: #fff8e8;
+      border: 3px solid #111;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+
+    .frame-bone::before {
+      left: -9px;
+      box-shadow: 0 14px 0 -3px #fff8e8, 0 14px 0 0 #111;
+    }
+
+    .frame-bone::after {
+      right: -9px;
+      box-shadow: 0 14px 0 -3px #fff8e8, 0 14px 0 0 #111;
+    }
+
+    .bone-a { top: 9px; left: 30px; transform: rotate(2deg); }
+    .bone-b { top: 11px; left: 86px; transform: rotate(-7deg); }
+    .bone-c { top: 9px; right: 30px; transform: rotate(3deg); }
+    .bone-d { bottom: 12px; left: 31px; transform: rotate(-5deg); }
+    .bone-e { bottom: 10px; left: 88px; transform: rotate(4deg); }
+    .bone-f { bottom: 12px; right: 31px; transform: rotate(-3deg); }
+    .bone-g { top: 57px; left: -8px; transform: rotate(91deg); }
+    .bone-h { bottom: 58px; left: -8px; transform: rotate(84deg); }
+    .bone-i { top: 57px; right: -8px; transform: rotate(87deg); }
+    .bone-j { bottom: 58px; right: -8px; transform: rotate(94deg); }
+
+    .frame-skull {
+      position: absolute;
+      font-size: 35px;
+      line-height: 1;
+      filter: drop-shadow(2px 2px 0 black);
+    }
+
+    .skull-one {
+      top: -5px;
+      left: 99px;
+      transform: rotate(-10deg);
+    }
+
+    .skull-two {
+      right: 6px;
+      top: 72px;
+      transform: rotate(17deg);
+    }
+
+    .skull-three {
+      left: 10px;
+      bottom: 11px;
+      transform: rotate(-8deg);
+    }
+
+    .skeleton-corner {
+      font-size: 30px;
+    }
+
+    .skeleton-top-left {
+      top: 8px;
+      left: 8px;
+    }
+
+    .skeleton-top-right {
+      top: 8px;
+      right: 8px;
+    }
+
+    .skeleton-bottom-left {
+      bottom: 8px;
+      left: 8px;
+    }
+
+    .skeleton-bottom-right {
+      bottom: 8px;
+      right: 8px;
+    }
+
+    .bone-top,
+    .bone-bottom {
+      left: 50%;
+      font-size: 24px;
+      letter-spacing: 4px;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .bone-top {
+      top: 10px;
+    }
+
+    .bone-bottom {
+      bottom: 10px;
+    }
+
+    .bone-left,
+    .bone-right {
+      top: 50%;
+      font-size: 24px;
+      letter-spacing: 4px;
+      white-space: nowrap;
+    }
+
+    .bone-left {
+      left: -22px;
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    .bone-right {
+      right: -22px;
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    .october-face-frame img {
+      width: 132px;
+      height: 132px;
+      object-fit: cover;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      position: relative;
+      top: 16px;
+      z-index: 2;
+    }
+
+    .october-machine {
+      position: relative;
+      z-index: 2;
+      margin-top: 26px;
+    }
+
+    #october-game .label {
+      background: #ff8a00;
+      color: #1a001f;
+      border-color: #210025;
+      box-shadow: 3px 3px 0 #5b0080;
+    }
+
+    #october-game .reel-window {
+      background: #120019;
+      border-color: #ff8a00;
+      box-shadow: 0 0 0 4px black, 0 0 18px rgba(255, 138, 0, 0.65);
+    }
+
+    #october-game .year-range {
+      background: #2b003b;
+      color: #fff3d6;
+      border-color: #ff8a00;
+      box-shadow: 3px 3px 0 black;
+    }
+
+    #october-game .year-range select {
+      background: #fff3d6;
+      color: #1a001f;
+      border-color: #ff8a00;
     }
 
     .open-layout {
@@ -233,6 +494,9 @@
     #chaos-two .item { background: #ffe29a; }
     #chaos-three .item { background: #ddfffb; }
     #chaos-four .item { background: #f1d4ff; }
+    #october-year .item { background: #2b003b; color: #fff3d6; }
+    #october-genre .item { background: #ff8a00; color: #1a001f; font-weight: bold; }
+    #october-wild .item { background: #d7ff65; color: #1a001f; }
 
     .chaos-machine {
       gap: 8px;
@@ -646,6 +910,68 @@
       z-index: 4;
     }
 
+    #october-cameo-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 4;
+    }
+
+    .october-peek-window {
+      position: absolute;
+      height: 280px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .october-peek-cameo {
+      position: absolute;
+      bottom: -285px;
+      width: 260px;
+      max-width: none;
+      max-height: none;
+      opacity: 0;
+      transform: translateY(52px) scale(0.84);
+      transform-origin: bottom center;
+      filter: drop-shadow(6px 8px 2px rgba(0, 0, 0, 0.55));
+      animation: octoberPeekOut 2.8s ease-in-out forwards;
+      z-index: 4;
+    }
+
+    .october-creature {
+      width: 360px;
+    }
+
+    .october-freddy {
+      width: 340px;
+    }
+
+    .october-michael,
+    .october-frankenstein {
+      width: 250px;
+    }
+
+    .october-michael {
+      width: 315px;
+      animation-name: octoberMichaelPeekOut;
+      filter: drop-shadow(6px 8px 2px rgba(0, 0, 0, 0.55));
+    }
+
+    .october-mummy {
+      width: 335px;
+    }
+
+    .october-invisibleman {
+      width: 285px;
+    }
+
+    .october-frankenstein {
+      width: 470px;
+      animation-name: octoberFrankensteinPeekOut;
+    }
+
     .jason-cameo {
       width: 360px;
       clip-path: inset(0 0 18% 0);
@@ -732,6 +1058,102 @@
       100% {
         opacity: 0;
         transform: translateY(40px) scale(0.85);
+      }
+    }
+
+    @keyframes octoberPeekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(52px) scale(0.84);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(52px) scale(0.84);
+      }
+      18%, 74% {
+        opacity: 1;
+        transform: translateY(-185px) scale(1);
+      }
+      92% {
+        opacity: 1;
+        transform: translateY(52px) scale(0.84);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(52px) scale(0.84);
+      }
+    }
+
+    .october-freddy {
+      animation-name: octoberFreddyPeekOut;
+    }
+
+    @keyframes octoberFreddyPeekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(52px) scale(0.84);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(52px) scale(0.84);
+      }
+      18%, 74% {
+        opacity: 1;
+        transform: translateY(-275px) scale(1);
+      }
+      92% {
+        opacity: 1;
+        transform: translateY(52px) scale(0.84);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(52px) scale(0.84);
+      }
+    }
+
+    @keyframes octoberMichaelPeekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(52px) scale(0.84);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(52px) scale(0.84);
+      }
+      18%, 74% {
+        opacity: 1;
+        transform: translateY(-225px) scale(1);
+      }
+      92% {
+        opacity: 1;
+        transform: translateY(52px) scale(0.84);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(52px) scale(0.84);
+      }
+    }
+
+    @keyframes octoberFrankensteinPeekOut {
+      0% {
+        opacity: 0;
+        transform: translateY(330px) scale(0.84);
+      }
+      1% {
+        opacity: 1;
+        transform: translateY(330px) scale(0.84);
+      }
+      18%, 74% {
+        opacity: 1;
+        transform: translateY(34px) scale(1);
+      }
+      94% {
+        opacity: 1;
+        transform: translateY(330px) scale(0.84);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(330px) scale(0.84);
       }
     }
 
@@ -823,6 +1245,7 @@
 
 <div class="tabs">
   <button class="tab-button active" id="movie-tab" onclick="showGame('movie')">Movie Slot</button>
+  <button class="tab-button" id="october-tab" onclick="showGame('october')">October Slot</button>
   <button class="tab-button" id="six-tab" onclick="showGame('six')">Six Degrees</button>
   <button class="tab-button" id="open-tab" onclick="showGame('open')">Open Wheelson</button>
   <button class="tab-button" id="chaos-tab" onclick="showGame('chaos')">Chaos Wheel</button>
@@ -873,6 +1296,73 @@
 </div>
 
 <button onclick="spin()">SPIN</button>
+
+</section>
+
+<section class="game-panel" id="october-game">
+
+<div id="october-cameo-layer"></div>
+
+<div class="october-moon"></div>
+<div class="october-bat">🦇</div>
+
+<h1>🎃 JOEL'S OCTOBER SLOT MACHINE 🎃</h1>
+
+<div class="october-face-frame" id="october-face-frame">
+  <div class="bone-frame-layer">
+    <span class="frame-bone bone-a"></span>
+    <span class="frame-bone bone-b"></span>
+    <span class="frame-bone bone-c"></span>
+    <span class="frame-bone bone-d"></span>
+    <span class="frame-bone bone-e"></span>
+    <span class="frame-bone bone-f"></span>
+    <span class="frame-bone bone-g"></span>
+    <span class="frame-bone bone-h"></span>
+    <span class="frame-bone bone-i"></span>
+    <span class="frame-bone bone-j"></span>
+    <span class="frame-skull skull-one">💀</span>
+    <span class="frame-skull skull-two">💀</span>
+    <span class="frame-skull skull-three">💀</span>
+  </div>
+  <img src="face.png" alt="">
+</div>
+
+<div class="machine october-machine">
+
+  <div class="column">
+    <div class="label">YEAR</div>
+    <div class="reel-window">
+      <div class="placeholder" id="october-year-placeholder">🎃🎃🎃</div>
+      <div class="reel-strip" id="october-year"></div>
+    </div>
+    <div class="year-range">
+      <div class="year-range-title">Year Range</div>
+      <div class="year-range-menus">
+        <select id="october-year-start" aria-label="October start year"></select>
+        <select id="october-year-end" aria-label="October end year"></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="label">GENRE</div>
+    <div class="reel-window">
+      <div class="placeholder" id="october-genre-placeholder">👻💀👻</div>
+      <div class="reel-strip" id="october-genre"></div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="label">WILDCARD</div>
+    <div class="reel-window">
+      <div class="placeholder" id="october-wild-placeholder">🕷️🕸️🕷️</div>
+      <div class="reel-strip" id="october-wild"></div>
+    </div>
+  </div>
+
+</div>
+
+<button onclick="spinOctober()">SPIN</button>
 
 </section>
 
@@ -1030,12 +1520,23 @@ const DEFAULT_START_YEAR = 1960;
 const DEFAULT_END_YEAR = 2026;
 
 let years = [];
+let octoberYears = [];
 let cameoTimer = null;
 let cameoBag = [];
+let octoberCameoBag = [];
 
 const genres = [
   "Comedy","Horror","Drama","Action","Mystery",
   "Romance","Sci-Fi","Crime","Thriller","Fantasy"
+];
+
+const octoberGenres = [
+"Slasher / Someone is a killer",
+"Ghost / Supernatural",
+"Psychological / Possession",
+"Monster / Creature Feature",
+"Vampire or Zombie",
+"Horror Comedy"
 ];
 
 const wildcards = [
@@ -1078,6 +1579,35 @@ const wildcards = [
 "Main actor has been in a movie with Samuel L Jackson",
 "Main Actor has been in a movie directed by Ridley Scott",
 "Starring someone who has been in a movie with a former SNL cast member"
+];
+
+const octoberWildcards = [
+"Sequel (but not the second one)",
+"Second movie of a franchise",
+"At least one of the main actors are dead",
+"Villain is played by a british actor",
+"Someone is smiling on the poster",
+"Directed by a non American",
+"Shot in Canada",
+"Based on a book",
+"Starring someone who was in one of the last five movies I’ve watched",
+"There is a non human character on the poster",
+"The word “Of” is in the title",
+"The poster is prominently red",
+"There is blood somewhere on the poster",
+"Lead character is a woman",
+"A character’s name is in the title",
+"Based on a legend/story/folklore",
+"Period Piece (set in a time before the year it was made)"
+];
+
+const octoberCameos = [
+{ file: "frankenstein.png", className: "october-frankenstein" },
+{ file: "freddy.png", className: "october-freddy" },
+{ file: "creature.png", className: "october-creature" },
+{ file: "michael2.png", className: "october-michael" },
+{ file: "mummy.png", className: "october-mummy" },
+{ file: "invisibleman.png", className: "october-invisibleman" }
 ];
 
 const chaosListOne = [
@@ -1632,6 +2162,10 @@ function buildReel(el, data) {
 const yearEl = document.getElementById("year");
 const genreEl = document.getElementById("genre");
 const wildEl = document.getElementById("wild");
+const octoberYearEl = document.getElementById("october-year");
+const octoberGenreEl = document.getElementById("october-genre");
+const octoberWildEl = document.getElementById("october-wild");
+const octoberFaceFrameEl = document.getElementById("october-face-frame");
 const actorOneEl = document.getElementById("actor-one");
 const actorTwoEl = document.getElementById("actor-two");
 const chaosOneEl = document.getElementById("chaos-one");
@@ -1646,8 +2180,11 @@ const openCardBottomEl = document.getElementById("open-card-bottom");
 const openWheelInputEl = document.getElementById("open-wheel-input");
 const yearStartEl = document.getElementById("year-start");
 const yearEndEl = document.getElementById("year-end");
+const octoberYearStartEl = document.getElementById("october-year-start");
+const octoberYearEndEl = document.getElementById("october-year-end");
 const cameoBackLayer = document.getElementById("cameo-back-layer");
 const cameoFrontLayer = document.getElementById("cameo-front-layer");
+const octoberCameoLayer = document.getElementById("october-cameo-layer");
 const moleLayer = document.getElementById("mole-layer");
 const owenWilsonCameoEl = document.getElementById("owen-wilson-cameo");
 const owenSpeechEl = document.getElementById("owen-speech");
@@ -1656,6 +2193,8 @@ const sixTimerTimeEl = document.getElementById("six-timer-time");
 
 fillYearMenu(yearStartEl, DEFAULT_START_YEAR);
 fillYearMenu(yearEndEl, DEFAULT_END_YEAR);
+fillYearMenu(octoberYearStartEl, DEFAULT_START_YEAR);
+fillYearMenu(octoberYearEndEl, DEFAULT_END_YEAR);
 
 function updateYearsFromMenus() {
   let start = Number(yearStartEl.value);
@@ -1675,9 +2214,30 @@ function updateYearsFromMenus() {
 yearStartEl.addEventListener("change", updateYearsFromMenus);
 yearEndEl.addEventListener("change", updateYearsFromMenus);
 
+function updateOctoberYearsFromMenus() {
+  let start = Number(octoberYearStartEl.value);
+  let end = Number(octoberYearEndEl.value);
+
+  if (start > end) {
+    const temp = start;
+    start = end;
+    end = temp;
+  }
+
+  octoberYears = makeYearList(start, end);
+  buildReel(octoberYearEl, octoberYears);
+  snap(octoberYearEl, 0);
+}
+
+octoberYearStartEl.addEventListener("change", updateOctoberYearsFromMenus);
+octoberYearEndEl.addEventListener("change", updateOctoberYearsFromMenus);
+
 updateYearsFromMenus();
+updateOctoberYearsFromMenus();
 buildReel(genreEl, genres);
 buildReel(wildEl, wildcards);
+buildReel(octoberGenreEl, octoberGenres);
+buildReel(octoberWildEl, octoberWildcards);
 buildReel(actorOneEl, actorListOne);
 buildReel(actorTwoEl, actorListTwo);
 buildReel(chaosOneEl, chaosListOne);
@@ -1872,8 +2432,85 @@ function playSpinCameo() {
   }, 250);
 }
 
+function clearOctoberCameo() {
+  octoberCameoLayer.innerHTML = "";
+}
+
+function playOctoberCameo() {
+  clearOctoberCameo();
+
+  setTimeout(() => {
+    if (octoberCameoBag.length === 0) {
+      octoberCameoBag = shuffled(octoberCameos);
+    }
+    const cameo = octoberCameoBag.shift();
+    const hidingSpots = Array.from(document.querySelectorAll("#october-game .reel-window"));
+    const lockedSpotIndexes = {
+      "october-freddy": 0,
+      "october-creature": 1,
+      "october-michael": 2,
+      "october-mummy": 0,
+      "october-invisibleman": 1,
+      "october-frankenstein": 2
+    };
+    const hidingSpotIndex = lockedSpotIndexes[cameo.className] ?? Math.floor(Math.random() * hidingSpots.length);
+    const hidingSpot = hidingSpots[hidingSpotIndex].getBoundingClientRect();
+    const octoberBox = document.getElementById("october-game").getBoundingClientRect();
+    const peekWindow = document.createElement("div");
+    const img = document.createElement("img");
+    const cameoWindowWidths = {
+      "october-creature": 390,
+      "october-freddy": 380,
+      "october-michael": 620,
+      "october-mummy": 360,
+      "october-invisibleman": 340,
+      "october-frankenstein": 620
+    };
+    const cameoWindowHeights = {
+      "october-frankenstein": 620,
+      "october-michael": 460,
+      "october-mummy": 340,
+      "october-invisibleman": 330
+    };
+    const windowWidth = cameoWindowWidths[cameo.className] || 300;
+    const windowHeight = cameoWindowHeights[cameo.className] || 280;
+    const cameoWidths = {
+      "october-creature": 360,
+      "october-freddy": 340,
+      "october-mummy": 335,
+      "october-invisibleman": 285,
+      "october-frankenstein": 470,
+      "october-michael": 315
+    };
+    const cameoOffsets = {
+      "october-michael": -78,
+      "october-frankenstein": -42
+    };
+    const imageWidth = cameoWidths[cameo.className] || 250;
+    const imageOffset = cameoOffsets[cameo.className] || 0;
+
+    peekWindow.className = "october-peek-window";
+    peekWindow.style.width = `${windowWidth}px`;
+    peekWindow.style.height = `${windowHeight}px`;
+    peekWindow.style.left = `${hidingSpot.left - octoberBox.left + hidingSpot.width / 2 - windowWidth / 2}px`;
+    peekWindow.style.top = `${hidingSpot.top - octoberBox.top - windowHeight}px`;
+
+    img.src = cameo.file;
+    img.alt = "";
+    img.className = `october-peek-cameo ${cameo.className}`;
+    img.style.left = `${windowWidth / 2 - imageWidth / 2 + imageOffset}px`;
+
+    peekWindow.appendChild(img);
+    octoberCameoLayer.appendChild(peekWindow);
+    img.addEventListener("animationend", clearOctoberCameo, { once: true });
+    img.addEventListener("error", clearOctoberCameo, { once: true });
+  }, 350);
+}
+
 let placeholdersHidden = false;
 let isSpinning = false;
+let octoberPlaceholdersHidden = false;
+let isOctoberSpinning = false;
 let actorPlaceholdersHidden = false;
 let isActorSpinning = false;
 let moleTimers = [];
@@ -2190,6 +2827,71 @@ function spin() {
       reels.forEach(r => snap(r.el, r.target));
       face.classList.remove("spinning");
       isSpinning = false;
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function spinOctober() {
+  if (isOctoberSpinning) return;
+  isOctoberSpinning = true;
+
+  updateOctoberYearsFromMenus();
+  playOctoberCameo();
+
+  if (!octoberPlaceholdersHidden) {
+    document.querySelectorAll("#october-game .placeholder").forEach(p => {
+      p.style.display = "none";
+    });
+    octoberPlaceholdersHidden = true;
+  }
+
+  const startTime = performance.now();
+  octoberFaceFrameEl.classList.add("spinning");
+
+  const reels = [
+    { el: octoberYearEl, list: octoberYears, duration: 2600 },
+    { el: octoberGenreEl, list: octoberGenres, duration: 3200 },
+    { el: octoberWildEl, list: octoberWildcards, duration: 3900 }
+  ].map(r => ({
+    el: r.el,
+    target: r.list.length * 2 + Math.floor(Math.random() * r.list.length),
+    duration: r.duration,
+    done: false
+  }));
+
+  function ease(t) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animate() {
+    const now = performance.now();
+    let allDone = true;
+
+    reels.forEach(r => {
+      if (r.done) return;
+
+      const t = Math.min((now - startTime) / r.duration, 1);
+      const e = ease(t);
+      const pos = e * (r.target * ITEM_HEIGHT);
+
+      r.el.style.transform = `translateY(${-pos}px)`;
+
+      if (t >= 1) {
+        r.done = true;
+        snap(r.el, r.target);
+      } else {
+        allDone = false;
+      }
+    });
+
+    if (!allDone) {
+      requestAnimationFrame(animate);
+    } else {
+      reels.forEach(r => snap(r.el, r.target));
+      octoberFaceFrameEl.classList.remove("spinning");
+      isOctoberSpinning = false;
     }
   }
 
